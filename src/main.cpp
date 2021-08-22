@@ -5,25 +5,35 @@
 #define WINDOW_HEIGHT 320
 #define WINDOW_WIDTH 640
 
-int main(int argc,char * arv[]){
+int main(int argc,char * argv[]){
 
-    RomReader reader(arv[0]);
+    // Initilizing the CHIP8 emulator 
+    RomReader reader("./bin/roms/IBMLogo.ch8");
     Chip chip;
     SDL_Event event;
     int size = reader.ReturnRomSize();
     uint8_t * rom = reader.ReturnRom();
     
+
+    // Loading the rom into the emulator
+
     chip.LoadRom(rom,size);
     delete rom;
 
+    //Init SDL
     if(SDL_Init(SDL_INIT_VIDEO|SDL_INIT_AUDIO) != 0){
         SDL_Log("Could not initialize SDL !");
         return EXIT_FAILURE;
     }
 
+
+    //Init display
+
     Display display("CHIP8 EMULATOR",WINDOW_HEIGHT,WINDOW_WIDTH);
     display.InitChip8Surface(chip.GetDisplay(),64,32);
 
+
+    // Emulationi loop
     while(1){
 
         if(SDL_PollEvent(&event)){
