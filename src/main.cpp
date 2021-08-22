@@ -7,7 +7,7 @@
 
 int main(int argc,char * arv[]){
 
-    RomReader reader("./bin/IBMLogo.ch8");
+    RomReader reader(arv[0]);
     Chip chip;
     SDL_Event event;
     int size = reader.ReturnRomSize();
